@@ -6,6 +6,7 @@ import { HiHome } from 'react-icons/hi'
 import { BiSearch } from 'react-icons/bi'
 import Box from "./Box";
 import SidebarItem from "./SidebarItem";
+import Library from "./Library";
 interface SidebarPRops {
     children: React.ReactNode;
 }
@@ -22,7 +23,7 @@ const Sidebar: React.FC<SidebarPRops> = ({ children }) => {
         },
         {
             label: 'Search',
-            icon: HiHome,
+            icon: BiSearch,
             active: pathname === '/search',
             href: '/search'
         }
@@ -37,9 +38,12 @@ const Sidebar: React.FC<SidebarPRops> = ({ children }) => {
                     </div>))}
                 </Box>
                 <Box className="overflow-y-auto h-full">
-                    Song libary
+                    <Library />
                 </Box>
             </div>
+            <main className="h-full flex-1 overflow-y-auto py-2">
+                {children}
+            </main>
         </div>
     )
 }
