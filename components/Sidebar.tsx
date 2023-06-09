@@ -10,6 +10,7 @@ import SidebarItem from "./SidebarItem";
 import Box from "./Box";
 
 import { useMemo } from "react";
+import Library from "./Library";
 
 interface SidebarProps {
   children: React.ReactNode;
@@ -62,7 +63,7 @@ const Sidebar = ({ children }: SidebarProps) => {
           </div>
         </Box>
         <Box className="overflow-y-auto h-full">
-          Libary
+          <Library />
         </Box>
       </div>
       <main className="h-full flex-1 overflow-y-auto py-2">
