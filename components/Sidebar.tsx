@@ -1,51 +1,75 @@
 "use client";
 
-import { usePathname } from "next/navigation"
-import { useMemo } from "react";
-import { HiHome } from 'react-icons/hi'
-import { BiSearch } from 'react-icons/bi'
-import Box from "./Box";
+import { HiHome } from "react-icons/hi";
+import { BiSearch } from "react-icons/bi";
+import { twMerge } from "tailwind-merge";
+import { usePathname } from "next/navigation";
+
+
 import SidebarItem from "./SidebarItem";
-import Library from "./Library";
-interface SidebarPRops {
-    children: React.ReactNode;
+import Box from "./Box";
+
+import { useMemo } from "react";
+
+interface SidebarProps {
+  children: React.ReactNode;
 }
 
-const Sidebar: React.FC<SidebarPRops> = ({ children }) => {
-    const pathname = usePathname();
+const Sidebar = ({ children }: SidebarProps) => {
+  const pathname = usePathname();
 
-    const routes = useMemo(() => [
-        {
-            label: 'Home',
-            icon: HiHome,
-            active: pathname !== '/search',
-            href: '/'
-        },
-        {
-            label: 'Search',
-            icon: BiSearch,
-            active: pathname === '/search',
-            href: '/search'
-        }
-    ], [pathname]);
+  const routes = useMemo(() => [
+    {
+      icon: HiHome,
+      label: 'Home',
+      active: pathname !== '/search',
+      href: '/'
+    },
+    {
+      icon: BiSearch,
+      label: 'Search',
+      href: '/search',
+      active: pathname === '/search'
+    },
+  ], [pathname]);
 
-    return (
-        <div className="flex h-full">
-            <div className="hidden md:flex flex-col gap-y-2 bg-black h-full w-[300px] p-2">
-                <Box className="flex flex-col gap-y-4 px-5 py-4">
-                    {routes.map((item) => (<div>
-                        <SidebarItem key={item.label} {...item} />
-                    </div>))}
-                </Box>
-                <Box className="overflow-y-auto h-full">
-                    <Library />
-                </Box>
-            </div>
-            <main className="h-full flex-1 overflow-y-auto py-2">
-                {children}
-            </main>
-        </div>
-    )
+  return (
+    <div 
+      className={twMerge(`
+        flex 
+        h-full
+        `,
+        'h-[calc(100%-80px)]'
+      )}
+    >
+      <div 
+        className="
+          hidden 
+          md:flex 
+          flex-col 
+          gap-y-2 
+          bg-black 
+          h-full 
+          w-[300px] 
+          p-2
+        "
+      >
+        <Box>
+          <div className="flex flex-col gap-y-4 px-5 py-4">
+            {routes.map((item) => (
+              <SidebarItem key={item.label} {...item} />
+            ))}
+          </div>
+        </Box>
+        <Box className="overflow-y-auto h-full">
+          Libary
+        </Box>
+      </div>
+      <main className="h-full flex-1 overflow-y-auto py-2">
+        {children}
+      </main>
+    </div>
+  );
 }
-
-export default Sidebar
+ 
+export default Sidebar;
